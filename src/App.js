@@ -9,11 +9,20 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-       persons : []
+       persons : [],
+       date: new Date().toString()
     }
   }
-     componentDidMount(){
+     componentDidMount() {
       console.warn('mount');
+
+      setInterval(() => {
+        this.setState({
+          date: new Date().toString
+        })
+        
+      }, 60000);
+
       setTimeout(() => {
         console.warn("loaded");
         this.setState({
@@ -34,18 +43,21 @@ class App extends Component {
           ]
         })
       }, 2000);
+    }
       
-    }   
+       
 
    render() {
-     console.warn(this.state.persons);
+     console.debug(this.state.persons);
      return(
     <div>
     <h1>Teams Networking</h1>
     <div>Search</div>
     <PersonsTable persons={this.state.persons}  border={1} />
+    <div>{this.state.date}</div>
     </div>
-   )}
+   );
+  }
   }
   
 
