@@ -33,7 +33,7 @@ export const PersonsTable = ({border, persons, onSubmit, onDelete  }) => (
               <td>{person.lastName}</td>
               <td><a target="_blank" href={person.url}>GitHub</a></td>
               <td>
-                  <a href="#" className="delete-row" onClick={e => {
+                  <a href="#" className="delete-row" onClick={ e => {
                       onDelete(person.id);
                   }}>&#10006;</a>
                   <a href="#" className="edit-row" data-id="{person.id}">&#9998;</a>
