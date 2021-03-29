@@ -6,16 +6,14 @@ import {PersonsTable} from "./PersonsTable";
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor(persons) {
+    super(persons);
     this.state = {
        persons : [],
        date: new Date().toString()
     }
   }
      componentDidMount() {
-      console.warn('mount');
-
       setInterval(() => {
         this.setState({
           date: new Date().toString
@@ -23,28 +21,19 @@ class App extends Component {
         
       }, 60000);
 
-      setTimeout(() => {
-        console.warn("loaded");
-        this.setState({
-          persons:[
-            { 
-              "id": "a123",
-              "firstName": "Oana",
-              "lastName":"Coman",
-              "url": "https://github.com/"
-          },
-          {  
-             "id": "b654",
-              "firstName": "Paul",
-              "lastName":"Coman",
-              "url": "https://github.com/"
-          
-          }
-          ]
-        })
-      }, 2000);
+      
+      this.load();
     }
       
+      load() {
+        fetch("http://localhost:3000/teams-json")
+          .then(res => res.json()) 
+          .then (persons => {
+            this.setState({
+            persons 
+           });
+        });
+      }
        
 
    render() {

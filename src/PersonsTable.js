@@ -1,5 +1,5 @@
-export const PersonsTable = (props) => (
-<table border={props.border}>
+export const PersonsTable = ({border, persons}) => (
+<table border={border}>
     <thead>
         <tr>
             <th>First Name</th>
@@ -9,7 +9,7 @@ export const PersonsTable = (props) => (
         </tr>
     </thead>
     <tbody>
-        {props.persons.map((person, index) => (
+        {persons.map((person, index) => (
             <tr key={index}>
                 <td>{person.firstName.split(/\s*,\s*/).join("<br>")}</td>
                 <td>{person.lastName}</td>
