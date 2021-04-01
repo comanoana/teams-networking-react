@@ -13,7 +13,7 @@ class App extends Component {
        date: new Date().toString()
     }
   }
-     componentDidMount() {
+     componentDidMount() {  
       setInterval(() => {
         this.setState({
           date: new Date().toString
