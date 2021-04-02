@@ -1,8 +1,7 @@
 import { Component } from 'react';
+import { connect } from 'react-redux';
 import './App.css';
-import {PersonsTable} from "./PersonsTable";
-
-
+import { PersonsTable } from "./PersonsTable";
 
 
 class App extends Component {
@@ -12,28 +11,21 @@ class App extends Component {
        persons : [],
        date: new Date().toString()
     }
+    console.warn('props', props);
   }
      componentDidMount() {  
       setInterval(() => {
         this.setState({
           date: new Date().toString
         })
-        
+         
       }, 60000);
 
       
       this.load();
     }
       
-      load() {
-        fetch("http://localhost:3000/teams-json")
-          .then(res => res.json()) 
-          .then (persons => {
-            this.setState({
-            persons 
-           });
-        });
-      }
+      load() {}
        
       add(person) {
         console.warn('person', person);
@@ -71,16 +63,14 @@ class App extends Component {
           this.load();
         });
       }
-      
 
       render() {
-        console.debug(this.state.persons);
         return (
           <div>
             <h1>Teams Networking</h1>
             <div>Search</div>
             <PersonsTable 
-              persons={this.state.persons}
+              persons={this.props.persons}
               border={1}
               onSubmit={person => {
                 this.add(person);
@@ -92,9 +82,16 @@ class App extends Component {
             <div>{this.state.date}</div>
           </div>
         );
-      }
     }
+}
   
+const mapStateToProps = state => {
+  console.info('map state to props', state);
+  return{
+    persons: state.persons
+  }
+ } ; 
+const AppContainer = connect(mapStateToProps)(App)
 
-export default App;
+export default AppContainer;
  

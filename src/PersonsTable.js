@@ -43,9 +43,9 @@ export const PersonsTable = ({border, persons, onSubmit, onDelete  }) => (
   </tbody>
   <tfoot>
       <tr>
-          <td><input type="text" requiered name="firstName" placeholder="Enter First Name"  /></td>
-          <td><input type="text" requiered name="lastName" placeholder="Enter Last Name" /></td>
-          <td><input type="text" requiered name="url" placeholder="GitHub account"  /></td>
+          <td><input type="text" required name="firstName" placeholder="Enter First Name"  /></td>
+          <td><input type="text" required name="lastName" placeholder="Enter Last Name" /></td>
+          <td><input type="text" required name="url" placeholder="GitHub account"  /></td>
           <td><button type="submit">Save</button></td>
       </tr>
   </tfoot>
