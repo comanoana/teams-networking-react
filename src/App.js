@@ -8,7 +8,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-       persons : [],
        date: new Date().toString()
     }
   }
@@ -27,7 +26,6 @@ class App extends Component {
       load() {}
        
       add(person) {
-        console.warn('person', person);
         document.getElementById('main-form').reset();
     
         fetch("http://localhost:3000/teams-json/create", {
@@ -86,9 +84,7 @@ const mapStateToProps = state => ({
   
 }); 
 const mapDispatchToProps = dispatch => ({
-  onAdd: (person) => {
-    dispatch({type: 'PERSON_ADDED', person})
-  },
+  onAdd: person => dispatch({type: 'PERSON_ADDED', person}),
   onDelete: id => dispatch({type: 'PERSON_REMOVED', id })
 });
 const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App)

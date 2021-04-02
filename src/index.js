@@ -11,16 +11,19 @@ const rootReducer = (state = { persons: [] }, action) => {
 switch (action.type) {
 case 'PERSONS_LOADED' : {
   return {
+    ...state,
     persons: action.persons
   }
  }
  case 'PERSON_ADDED' : {
    return {
-     persons: state.persons.concat(action.person)
+     ...state,
+     persons: [...state.persons, action.person]
    };
   }
   case 'PERSON_REMOVED' : {
     return {
+      ...state,
       persons: state.persons.filter(person => person.id != action.id)
     };
    }
