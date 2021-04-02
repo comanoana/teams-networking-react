@@ -11,7 +11,6 @@ class App extends Component {
        persons : [],
        date: new Date().toString()
     }
-    console.warn('props', props);
   }
      componentDidMount() {  
       setInterval(() => {
@@ -43,11 +42,11 @@ class App extends Component {
             console.warn(r);
             if (r.success) {
               person.id = r.id;
-              const persons= this.state.persons.concat(person);
-              this.setState({
-               persons
-              });
-              //this.load();
+              this.props.dispatch({
+                type: 'PERSON_ADDED', 
+                person
+              })
+        
             }
           });
       }
@@ -85,12 +84,11 @@ class App extends Component {
     }
 }
   
-const mapStateToProps = state => {
-  console.info('map state to props', state);
-  return{
-    persons: state.persons
-  }
- } ; 
+const mapStateToProps = state => ({
+  
+  persons: state.persons
+  
+}); 
 const AppContainer = connect(mapStateToProps)(App)
 
 export default AppContainer;

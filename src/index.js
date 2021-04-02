@@ -6,14 +6,19 @@ import reportWebVitals from './reportWebVitals';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
-const rootReducer = (state = {persons: [] }, action) =>{
+const rootReducer = (state = { persons: [] }, action) => {
+  console.warn('rootReducer', state, action);
 switch (action.type) {
 case 'PERSONS_LOADED' : {
   return {
     persons: action.persons
   }
-
  }
+ case 'PERSON_ADDED' : {
+   return {
+     persons: state.persons.concat(action.person)
+   };
+  }
  default:
    return state;
 }
@@ -39,8 +44,7 @@ load();
 ReactDOM.render(
    <Provider store={store}>
     <App /> 
-   </Provider>,
- 
+   </ Provider>,
   document.getElementById('root')  
 );
 
