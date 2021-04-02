@@ -42,11 +42,7 @@ class App extends Component {
             console.warn(r);
             if (r.success) {
               person.id = r.id;
-              this.props.dispatch({
-                type: 'PERSON_ADDED', 
-                person
-              })
-        
+              this.props.onAdd(person);
             }
           });
       }
@@ -59,7 +55,7 @@ class App extends Component {
           },
           body: JSON.stringify({ id })
         }).then(r => r.json()).then(status => {
-          this.load();
+          this.props.onDelete(id);
         });
       }
 
@@ -89,7 +85,13 @@ const mapStateToProps = state => ({
   persons: state.persons
   
 }); 
-const AppContainer = connect(mapStateToProps)(App)
+const mapDispatchToProps = dispatch => ({
+  onAdd: (person) => {
+    dispatch({type: 'PERSON_ADDED', person})
+  },
+  onDelete: id => dispatch({type: 'PERSON_REMOVED', id })
+});
+const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App)
 
 export default AppContainer;
- 
+  

@@ -19,6 +19,11 @@ case 'PERSONS_LOADED' : {
      persons: state.persons.concat(action.person)
    };
   }
+  case 'PERSON_REMOVED' : {
+    return {
+      persons: state.persons.filter(person => person.id != action.id)
+    };
+   }
  default:
    return state;
 }
