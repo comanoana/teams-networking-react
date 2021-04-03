@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 import { PersonsTable } from "./PersonsTable";
+import { FilterContainer} from "./filter";
 
 
 class App extends Component {
@@ -18,58 +19,32 @@ class App extends Component {
         })
          
       }, 60000);
-
       
-      this.load();
+      this.props.onLoad();
     }
-      
-      load() {}
-       
-      add(person) {
+
+     add(person) {
         document.getElementById('main-form').reset();
-    
-        fetch("http://localhost:3000/teams-json/create", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(person)
-        })
-          .then(res => res.json())
-          .then(r => {
-            console.warn(r);
-            if (r.success) {
-              person.id = r.id;
-              this.props.onAdd(person);
-            }
-          });
-      }
-    
-      remove(id) {
-        fetch("http://localhost:3000/teams-json/delete", {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ id })
-        }).then(r => r.json()).then(status => {
-          this.props.onDelete(id);
-        });
+        this.props.onAdd(person)
       }
 
-      render() {
+     render() {
+        const f = this.props.filter;
+        const persons = this.props.persons.filter(person => person.firstName.toLowerCase().indexOf(f) > -1);
         return (
           <div>
             <h1>Teams Networking</h1>
-            <div>Search</div>
+            <div>
+              <FilterContainer />
+            </div>
             <PersonsTable 
-              persons={this.props.persons}
+              persons={persons}
               border={1}
               onSubmit={person => {
                 this.add(person);
               }}
               onDelete={id => {
-                this.remove(id);
+                this.props(id);
               }}
             />
             <div>{this.state.date}</div>
@@ -79,13 +54,14 @@ class App extends Component {
 }
   
 const mapStateToProps = state => ({
-  
-  persons: state.persons
+  persons: state.persons,
+  filter: state.filter
   
 }); 
 const mapDispatchToProps = dispatch => ({
-  onAdd: person => dispatch({type: 'PERSON_ADDED', person}),
-  onDelete: id => dispatch({type: 'PERSON_REMOVED', id })
+  onLoad: () => dispatch({type: 'PERSONS_LOAD' }),
+  onAdd: person => dispatch({type: 'PERSON_ADD', person}),
+  onDelete: id => dispatch({type: 'PERSON_REMOVE', id })
 });
 const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App)
 
